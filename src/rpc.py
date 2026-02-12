@@ -2,23 +2,25 @@ import os
 import time
 from dotenv import load_dotenv
 from pypresence import Presence, exceptions
+import logging
 
 load_dotenv()
 client_id = os.getenv("APP_ID")
 
 class rpcClient:
     def __init__(self, RPC = Presence(client_id)):
+        self.logger = logging.getLogger("pymprisence")
         self.RPC = RPC
 
     def waitForDiscord(self):
-        print("Waiting for discord like a good boy")
+        self.logger.info("Waiting for discord like a good boy")
         time.sleep(15)
         self.connectToRPC()
 
     def connectToRPC(self):
         try:
             self.RPC.connect()
-            print("Connected to discord succesfully")
+            self.logger.info("Connected to discord succesfully")
         except exceptions.DiscordNotFound:
             self.waitForDiscord()
 
@@ -28,4 +30,4 @@ class rpcClient:
             details = details,
             name = name
         )
-        print(f"Updated RPC (state: {state}, details: {details}, name: {name})")
+        self.logger.info(f"Updated RPC (state: {state}, details: {details}, name: {name})")
