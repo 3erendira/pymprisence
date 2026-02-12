@@ -5,12 +5,11 @@ from pypresence import Presence, exceptions
 import logging
 
 load_dotenv()
-client_id = os.getenv("APP_ID")
 
 class rpcClient:
-    def __init__(self, RPC = Presence(client_id)):
+    def __init__(self):
         self.logger = logging.getLogger("pymprisence")
-        self.RPC = RPC
+        self.RPC = Presence(os.getenv("APP_ID"))
 
     def waitForDiscord(self):
         self.logger.info("Waiting for discord like a good boy")
