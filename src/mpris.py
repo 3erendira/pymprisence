@@ -1,0 +1,38 @@
+from jeepney import DBusAddress, new_method_call, Properties
+from jeepney.io.blocking import open_dbus_connection, Proxy
+
+class MPRIS:
+    def __init__(self):
+        self.conn = open_dbus_connection(bus="SESSION")
+
+    def get_address(self, player) -> DBusAddress:
+        address = DBusAddress('/org/mpris/MediaPlayer2',
+                              bus_name=player,
+                              interface="org.mpris.MediaPlayer2.Player")
+        return address
+    
+    def get_players(self) -> list[str]:
+        address = DBusAddress("/org/freedesktop/DBus",
+                              bus_name="org.freedesktop.DBus",
+                              interface="org.freedesktop.DBus")
+        players = []
+
+        msg = new_method_call(address, "ListNames")
+        reply = self.conn.send_and_get_reply(msg)
+        for iface in reply.body[0]:
+            if iface.startswith("org.mpris.MediaPlayer2."):
+                players.append(iface)
+
+        return players
+
+    def get_metadata(self):
+        obj = self.get_address("org.mpris.MediaPlayer2.fooyin")
+        props_if = DBusAddress(obj.object_path,
+                              bus_name=obj.bus_name,
+                              interface="org.freedesktop.DBus.Properties")
+        msg = new_method_call(props_if,
+                                "Get",
+                                "ss",
+                                (obj.interface, "Metadata"))
+        reply = self.conn.send_and_get_reply(msg)
+        return reply.body[0][1]
