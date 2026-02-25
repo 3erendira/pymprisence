@@ -1,0 +1,41 @@
+[discord]
+# Create an application here:
+# https://discord.com/developers/applications
+app_id = "CHANGE_ME"
+
+[presence]
+# This is only here as a fallback. You can change this if you want.
+name = "pymprisence"
+interval = 5
+clear_on_pause = true
+
+[cover]
+# Whether or not to show the song cover art (if any found)
+enable = true
+
+[cover.provider]
+# What providers to use for uploading cover art
+# Options: catbox, imgbb, imgur
+# Both imgur and imgbb require API keys
+providers = ["catbox"]
+
+[cover.provider.imgbb]
+expiration = 86400
+
+[cover.provider.imgur]
+tba = 0
+
+[cover.provider.catbox]
+# litterbox stores files temporarily for a specified time
+litterbox = false
+litter_duration = 24
+
+[player]
+# Default player. If the player that's currently playing isn't found in the config, pymprisence will fallback to this
+default = { ignore = false, activity_type = "listening" }
+
+[player.fooyin]
+ignore = false
+activity_type = "listening"
+
+
