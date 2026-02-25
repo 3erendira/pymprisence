@@ -36,3 +36,15 @@ class MPRIS:
                                 (obj.interface, "Metadata"))
         reply = self.conn.send_and_get_reply(msg)
         return reply.body[0][1]
+    
+    def get_position(self):
+        obj = self.get_address("org.mpris.MediaPlayer2.fooyin")
+        props_if = DBusAddress(obj.object_path,
+                              bus_name=obj.bus_name,
+                              interface="org.freedesktop.DBus.Properties")
+        msg = new_method_call(props_if,
+                                "Get",
+                                "ss",
+                                (obj.interface, "Position"))
+        reply = self.conn.send_and_get_reply(msg)
+        return reply.body[0][1]
