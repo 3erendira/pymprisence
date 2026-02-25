@@ -1,7 +1,8 @@
 import os
 import time
 from dotenv import load_dotenv
-from pypresence import Presence, exceptions
+from pypresence import exceptions
+from pypresence.presence import Presence
 import logging
 
 load_dotenv()
@@ -23,10 +24,13 @@ class rpcClient:
         except exceptions.DiscordNotFound:
             self.waitForDiscord()
 
-    def updateRPC(self, state, details, name):
+    def updateRPC(self, state, details, name, activity_type, length, position):
         self.RPC.update(
             state = state,
             details = details,
-            name = name
+            name = name,
+            activity_type = activity_type,
+            start = int(time.time()) - position,
+            end = int(time.time()) + int(length - position)
         )
         self.logger.info(f"Updated RPC (state: {state}, details: {details}, name: {name})")
