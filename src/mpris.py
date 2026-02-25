@@ -1,5 +1,5 @@
-from jeepney import DBusAddress, new_method_call, Properties
-from jeepney.io.blocking import open_dbus_connection, Proxy
+from jeepney import DBusAddress, new_method_call
+from jeepney.io.blocking import open_dbus_connection
 
 class MPRIS:
     def __init__(self):
