@@ -5,13 +5,13 @@ class MPRIS:
     def __init__(self):
         self.conn = open_dbus_connection(bus="SESSION")
 
-    def get_address(self, player) -> DBusAddress:
+    def getAddress(self, player) -> DBusAddress:
         address = DBusAddress('/org/mpris/MediaPlayer2',
                               bus_name=player,
                               interface="org.mpris.MediaPlayer2.Player")
         return address
     
-    def get_players(self) -> list[str]:
+    def getPlayers(self) -> list[str]:
         address = DBusAddress("/org/freedesktop/DBus",
                               bus_name="org.freedesktop.DBus",
                               interface="org.freedesktop.DBus")
@@ -25,8 +25,8 @@ class MPRIS:
 
         return players
 
-    def get_metadata(self) -> dict:
-        obj = self.get_address("org.mpris.MediaPlayer2.fooyin")
+    def getMetadata(self) -> dict:
+        obj = self.getAddress("org.mpris.MediaPlayer2.fooyin")
         props_if = DBusAddress(obj.object_path,
                               bus_name=obj.bus_name,
                               interface="org.freedesktop.DBus.Properties")
@@ -37,8 +37,8 @@ class MPRIS:
         reply = self.conn.send_and_get_reply(msg)
         return reply.body[0][1]
     
-    def get_position(self) -> int:
-        obj = self.get_address("org.mpris.MediaPlayer2.fooyin")
+    def getPosition(self) -> int:
+        obj = self.getAddress("org.mpris.MediaPlayer2.fooyin")
         props_if = DBusAddress(obj.object_path,
                               bus_name=obj.bus_name,
                               interface="org.freedesktop.DBus.Properties")
@@ -49,8 +49,8 @@ class MPRIS:
         reply = self.conn.send_and_get_reply(msg)
         return reply.body[0][1]
     
-    def get_playback_status(self) -> bool | str:
-        obj = self.get_address("org.mpris.MediaPlayer2.fooyin")
+    def getPlaybackStatus(self) -> bool | str:
+        obj = self.getAddress("org.mpris.MediaPlayer2.fooyin")
         props_if = DBusAddress(obj.object_path,
                               bus_name=obj.bus_name,
                               interface="org.freedesktop.DBus.Properties")
