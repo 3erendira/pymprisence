@@ -2,3 +2,5 @@ pypresence
 requests
 python-dotenv
 jeepney
+diskcache
+xxhash
