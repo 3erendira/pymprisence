@@ -24,13 +24,14 @@ class rpcClient:
         except exceptions.DiscordNotFound:
             self.waitForDiscord()
 
-    def updateRPC(self, state, details, name, activity_type, length, position):
+    def updateRPC(self, state, details, name, activity_type, length, position, large_image):
         self.RPC.update(
             state = state,
             details = details,
             name = name,
             activity_type = activity_type,
             start = int(time.time()) - position,
-            end = int(time.time()) + int(length - position)
+            end = int(time.time()) + int(length - position),
+            large_image = large_image
         )
         self.logger.info(f"Updated RPC (state: {state}, details: {details}, name: {name})")
