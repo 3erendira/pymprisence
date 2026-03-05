@@ -3,14 +3,13 @@ from pypresence.types import ActivityType
 from logger import Logger
 from mpris import MPRIS
 from cover import coverCacheHandler
-from urllib.parse import urlparse
+from util import createDirs
 import time
 import tomllib
 import os
 
 def main():
-    os.makedirs(os.path.join(os.path.expanduser("~"), ".pymprisence/logs/"), exist_ok=True)
-    os.makedirs(os.path.join(os.path.expanduser("~"), ".pymprisence/cache/"), exist_ok=True)
+    createDirs()
     Logger().get()
     conn = MPRIS()
     cover = coverCacheHandler()
@@ -31,7 +30,7 @@ def main():
             activity_type = ActivityType.LISTENING,
             length = metadata["mpris:length"][1] / 1000000,
             position = position / 1000000,
-            large_image = cover.uploadImage(urlparse(metadata["mpris:artUrl"][1]).path)
+            large_image = cover.fetchCover(metadata["mpris:artUrl"][1])
         )
         time.sleep(5)
 
