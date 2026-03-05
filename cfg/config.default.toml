@@ -15,15 +15,8 @@ enable = true
 
 [cover.provider]
 # What providers to use for uploading cover art
-# Options: catbox, imgbb, imgur
-# Both imgur and imgbb require API keys
+# Currently only catbox is available
 providers = ["catbox"]
-
-[cover.provider.imgbb]
-expiration = 86400
-
-[cover.provider.imgur]
-tba = 0
 
 [cover.provider.catbox]
 # litterbox stores files temporarily for a specified time
