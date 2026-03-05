@@ -16,6 +16,9 @@ class coverCacheHandler:
         self.catbox_api = "https://catbox.moe/user/api.php"
 
     def fetchCover(self, path):
+        if path is None:
+            self.logger.info("Cover path was none. Skipping uploading and caching")
+            return
         parsed_path = urlparse(path).path
         hash = self.hashImage(parsed_path)
         url = self.getCoverFromCache(hash)
