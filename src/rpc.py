@@ -1,16 +1,16 @@
 import os
 import time
-from dotenv import load_dotenv
 from pypresence import exceptions
 from pypresence.presence import Presence
 import logging
-
-load_dotenv()
+import tomllib
 
 class rpcClient:
     def __init__(self):
+        with open(os.path.join(os.path.expanduser("~"), ".config/pymprisence/config.toml"), "rb") as f:
+            self.cfg = tomllib.load(f)
         self.logger = logging.getLogger("pymprisence")
-        self.RPC = Presence(os.getenv("APP_ID"))
+        self.RPC = Presence(self.cfg["discord"]["app_id"])
 
     def waitForDiscord(self):
         self.logger.info("Waiting for discord like a good boy")
